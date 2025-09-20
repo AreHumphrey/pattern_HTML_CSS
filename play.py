@@ -45,23 +45,44 @@ while running:
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_LEFT] and platform.left > 0:
-        ball.x -= PLATFORM_SPEED
+        platform.x -= PLATFORM_SPEED
     # K_LEFT - K_w
     # K_RIGHT - K_d
     if keys[pygame.K_RIGHT] and platform.right < WIDTH:
-        ball.x += PLATFORM_SPEED
-    
+        platform.x += PLATFORM_SPEED
+
     ball.x += ball_speed_x
     ball.y += ball_speed_y
-    
+
     if ball.left <= 0:
         ball_speed_x = -ball_speed_x
-    
+
     if ball.right >= WIDTH:
         ball_speed_x = -ball_speed_x
-    
+
     if ball.top <= 0:
         ball_speed_y = -ball_speed_y
-     
+
     if ball.top > HEIGHT:
         score -= 1
+
+        ball.x = random.randint(0, WIDTH - BALL_SIZE)
+        ball.y = 0
+
+        ball_speed_y = BALL_SPEED
+        ball_speed_x = random.choice([-BALL_SPEED, BALL_SPEED])
+
+    if ball.colliderect(platform) and ball_speed_y > 0:
+        ball_speed_y = -ball_speed_y
+        score += 1
+    screen.fill(BLACK)
+    pygame.draw.rect(screen, BLUE, platform)
+    pygame.draw.circle(screen, WHITE, ball.center,BALL_SIZE // 2)
+
+    score_text = font.render("Счёт: " + str(score), True, WHITE)
+    screen.blit(score_text, (10, 10))
+
+    pygame.display.flip()
+    clock.tick(60)
+pygame.quit()
+sys.exit()
