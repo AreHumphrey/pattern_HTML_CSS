@@ -1,0 +1,67 @@
+<body>
+  <!-- Контейнер для всех звёзд. Заполняется динамически через JavaScript -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Основной контент страницы -->
+  <main>
+    <div class="center-content">
+      <h1>Добро пожаловать в космос</h1>
+      <p>Звёзды мерцают над вами...</p>
+    </div>
+  </main>
+
+  <!-- СКРИПТ: генерация звёзд -->
+  <script>
+    // Получаем ссылку на контейнер звёзд по ID
+    const starsContainer = document.getElementById('stars');
+
+    // Сколько звёзд создать (можно изменить для большей/меньшей плотности)
+    const starCount = 200;
+
+    // Цикл: создаём 200 звёзд
+    for (let i = 0; i < starCount; i++) {
+      // Создаём новый HTML-элемент <div>
+      const star = document.createElement('div');
+      
+      // Добавляем класс 'star', чтобы применить стили
+      star.classList.add('star');
+
+      // === ГЕНЕРАЦИЯ СЛУЧАЙНЫХ ПАРАМЕТРОВ ===
+
+      // Случайная позиция по X и Y (в процентах от размера экрана)
+      const x = Math.random() * 100; // от 0 до 100%
+      const y = Math.random() * 100;
+
+      // Случайный размер звезды: от 0.5px до 3px
+      const size = Math.random() * 2.5 + 0.5;
+
+      // Случайная длительность анимации мерцания: от 2 до 6 секунд
+      const duration = Math.random() * 4 + 2;
+
+      // Случайная базовая прозрачность: от 0.2 до 1.0
+      const opacity = Math.random() * 0.8 + 0.2;
+
+      // === ПРИМЕНЕНИЕ СТИЛЕЙ ===
+
+      // Устанавливаем позицию звезды
+      star.style.left = ${x}%;
+      star.style.top = ${y}%;
+
+      // Устанавливаем размер (ширина = высота → круг)
+      star.style.width = ${size}px;
+      star.style.height = ${size}px;
+
+      // Передаём случайные значения в CSS через кастомные переменные
+      star.style.setProperty('--duration', `${duration}s`);
+      star.style.setProperty('--opacity', opacity);
+
+      // Случайная задержка старта анимации (от 0 до 5 секунд)
+      // Это создаёт эффект "естественного" мерцания — звёзды не синхронизированы
+      star.style.animationDelay = ${Math.random() * 5}s;
+
+      // Добавляем готовую звезду в контейнер
+      starsContainer.appendChild(star);
+    }
+  </script>
+</body>
+</html>
